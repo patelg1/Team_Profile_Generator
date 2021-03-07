@@ -73,9 +73,8 @@ function createMananger(){
             name: 'managerOffice'
         },
     ]).then((answers) => {
-        const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOffice);
-        const role = manager.getRole();
-        teamArray.push(manager, role)
+        const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOffice);        
+        teamArray.push(manager)
         askQuestions();
     })
 }
@@ -110,9 +109,8 @@ function createEngineer(){
             name: 'github'
         },
     ]).then((answers) => {
-        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.github);
-        const role = engineer.getRole();
-        teamArray.push(engineer, role);
+        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.github);        
+        teamArray.push(engineer);
         askQuestions();
     })
 }
@@ -147,9 +145,8 @@ function createIntern(){
             name: 'school'
         },
     ]).then((answers) => {
-        const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.school);
-        let role = intern.getRole();
-        teamArray.push(intern, role);
+        const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.school);        
+        teamArray.push(intern);
         askQuestions();
     })
 }
@@ -178,67 +175,57 @@ function renderHTML(){
                 
     `
     htmlArray.push(htmlBegin);
-    for (let i = 1; i < teamArray.length; i++) {
+    teamArray.forEach(employee => { 
+        if (employee.name){
         let object = `
-                
-                    
+            <div class="card m-2 col-3 border-0">
+                <div class="card-header bg-primary text-white">
+                <h3 class="card-title">${employee.name}</h3>  
+                        
         `
-        if(teamArray[i].officeNumber) {
-            object += `
-            <div class="card m-2 col-3 border-0">
-                <div class="card-header bg-primary text-white">
-                <h3 class="card-title">${teamArray[i].name}</h3>
-                <h4 class="card-title"><i class="fas fa-mug-hot"></i> ${teamArray[i].getRole()}</h4>
+        if(employee.officeNumber) {
+            object += `            
+                <h4 class="card-title"><i class="fas fa-mug-hot"></i> ${employee.role}</h4>
                 </div>
                 <div class="card-body bg-light">
                     <ul class="list-group py-3">
-                        <li class="list-group-item">ID: ${teamArray[i].id}</li>
-                        <li class="list-group-item">Email: <a href="mailto:${teamArray[i].email}">${teamArray[i].email}</li></a>
-                        <li class="list-group-item">Office number: ${teamArray[i].officeNumber}</li>
-                    </ul>
-                </div>
-            </div>            
+                        <li class="list-group-item">ID: ${employee.id}</li>
+                        <li class="list-group-item">Email: <a href="mailto:${employee.email}">${employee.email}</li></a>
+                        <li class="list-group-item">Office number: ${employee.officeNumber}</li>
+                    </ul>                      
             `
         }
-        if(teamArray[i].github) {
-            object += `
-            <div class="card m-2 col-3 border-0">
-                <div class="card-header bg-primary text-white">
-                <h3 class="card-title">${teamArray[i].name}</h3>
-                <h4 class="card-title"><i class="fas fa-glasses"></i> ${teamArray[i].getRole()}</h4>
+        if(employee.github) {
+            object += `            
+                <h4 class="card-title"><i class="fas fa-glasses"></i> ${employee.role}</h4>
                 </div>
                 <div class="card-body bg-light">
                     <ul class="list-group py-3">
-                        <li class="list-group-item">ID: ${teamArray[i].id}</li>
-                        <li class="list-group-item">Email: <a href="mailto:${teamArray[i].email}">${teamArray[i].email}</li></a>
-                        <li class="list-group-item">GitHub: <a href="https://github.com/${teamArray[i].github}">${teamArray[i].github}</li></a>
-                    </ul>
-                </div>
-            </div>                
+                        <li class="list-group-item">ID: ${employee.id}</li>
+                        <li class="list-group-item">Email: <a href="mailto:${employee.email}">${employee.email}</li></a>
+                        <li class="list-group-item">GitHub: <a href="https://github.com/${employee.github}">${employee.github}</li></a>
+                    </ul>                           
             `
         }
-        if(teamArray[i].school){
-            object += `
-            <div class="card m-2 col-3 border-0">
-                <div class="card-header bg-primary text-white">
-                <h3 class="card-title">${teamArray[i].name}</h3>
-                <h4 class="card-title"><i class="fas fa-user-graduate"></i> ${teamArray[i].getRole()}</h4>
+        if(employee.school){
+            object += `            
+                <h4 class="card-title"><i class="fas fa-user-graduate"></i> ${employee.role}</h4>
                 </div>
                 <div class="card-body bg-light">
                     <ul class="list-group py-3">
-                        <li class="list-group-item">ID: ${teamArray[i].id}</li>
-                        <li class="list-group-item">Email: <a href="mailto:${teamArray[i].email}">${teamArray[i].email}</li></a>
-                        <li class="list-group-item">School: ${teamArray[i].school}</li>
-                    </ul>
-                </div>
-            </div>            
+                        <li class="list-group-item">ID: ${employee.id}</li>
+                        <li class="list-group-item">Email: <a href="mailto:${employee.email}">${employee.email}</li></a>
+                        <li class="list-group-item">School: ${employee.school}</li>
+                    </ul>                        
             `
         } 
         object += `
-                    
+                </div>
+            </div>          
         ` 
-        htmlArray.push(object);   
-    }
+        htmlArray.push(object); 
+        }  
+    });
 
     
     const htmlEnd = `
