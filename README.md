@@ -20,7 +20,10 @@ then they exit the application, and the HTML is generated.
 Run `npm install` to install dependency [Inquirer](https://www.npmjs.com/package/inquirer) and [Jest](https://www.npmjs.com/package/jest)
 
 ## Usage
+![Team Profile demo](./assets/Team_Profile_demo.gif)
 
+## Screenshot
+![Team Profile Generator screenshot](./assets/team_profile_screenshot.png)
 
 ## Credits
 N/A
