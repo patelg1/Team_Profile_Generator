@@ -1,11 +1,16 @@
+// Required node packages
 const fs = require('fs');
 const inquirer = require('inquirer');
+
+// Required classes
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
+// Array to hold team info
 let teamArray = [];
 
+// Function to start application
 function startApp(){
     inquirer.prompt([
         {
@@ -13,13 +18,14 @@ function startApp(){
             name: 'teamName'
         }
     ])
+    // Add team name to array and begin create manager
     .then(function(data){
         const teamName = data.teamName;
         teamArray.push(teamName);
         createMananger();
     })
 }
-
+// Function to ask prompts for user team creation
 function askQuestions(){
     inquirer.prompt([
         {
@@ -28,6 +34,7 @@ function askQuestions(){
             choices: ['Engineer', 'Intern', 'None'],
             name: 'employee'
         }
+        // Switch case to see if engineer, intern or none selected
     ]).then((answers) => {
         switch (answers.employee){
             case ('Engineer'):
@@ -42,7 +49,7 @@ function askQuestions(){
 
     });
 }
-
+// Function to create manager based on prompt answers
 function createMananger(){
     inquirer.prompt([
         {
@@ -78,7 +85,7 @@ function createMananger(){
         askQuestions();
     })
 }
-
+// Function to create engineer based on prompt answers
 function createEngineer(){
     inquirer.prompt([
         {
@@ -114,7 +121,7 @@ function createEngineer(){
         askQuestions();
     })
 }
-
+// Function to create intern based on prompt answers
 function createIntern(){
     inquirer.prompt([
         {
@@ -150,7 +157,7 @@ function createIntern(){
         askQuestions();
     })
 }
-
+// Function to generate HTML with team name and team cards with info
 function renderHTML(){
     console.log("//////You have done it!!!//////")
     const htmlArray = [];
@@ -236,9 +243,10 @@ function renderHTML(){
 </html> 
     `
     htmlArray.push(htmlEnd);
+    // Write the info to html
     fs.writeFile(`./dist/${teamArray[0]}.html`, htmlArray.join(''), function(err){
         
     });
 }
-
+// Call the start application function
 startApp();
